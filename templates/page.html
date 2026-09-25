@@ -1,0 +1,31 @@
+{{define "page"}}<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AltForge · Your next legend starts here</title>
+<link rel="stylesheet" href="/static/style.css">
+<script src="/static/htmx.min.js" defer></script>
+</head>
+<body>
+<header><a class="brand" href="/">AF <span>AltForge</span></a><span class="edition">THE CHARACTER CREATION COMPANION</span></header>
+<main>
+<div class="eyebrow">ANOTHER ALT. ANOTHER ADVENTURE.</div>
+<h1>Great deeds.<br>Better <em>names.</em></h1>
+<p class="intro">A name for the hero you’ll definitely level this time. Forge a first name and surname inspired by the peoples of Azeroth.</p>
+<section class="forge" aria-label="Name generator">
+<form action="/" method="get" hx-get="/" hx-target="#names" hx-swap="outerHTML" hx-disabled-elt="find button" hx-indicator="#working">
+<div class="field"><label for="ancestry">Choose your ancestry</label><select id="ancestry" name="ancestry">{{range .Ancestries}}<option {{if eq . $.Selected}}selected{{end}}>{{.}}</option>{{end}}</select></div>
+<button type="submit">Forge names <span aria-hidden="true">↗</span></button>
+<span id="working" class="htmx-indicator" role="status">Stoking the forge…</span>
+</form>
+{{template "names" .}}
+</section>
+<p class="footnote">For your next alt, roleplay character, or tavern introduction. Names are inspiration; availability is up to your realm.</p>
+</main>
+<footer><span>HANDCRAFTED PARTS. RANDOM ACTS OF HEROISM.</span><span>An unofficial Warcraft-inspired toy.</span></footer>
+</body></html>{{end}}
+
+{{define "names"}}<section id="names" aria-live="polite" aria-atomic="true" aria-label="Generated names">
+<div class="results-heading"><h2>Your next identities</h2><span>{{.Selected}} · {{len .Names}} names</span></div>
+<div class="name-grid">{{range .Names}}<article class="name-card"><span class="first">{{.First}}</span><span class="last">{{.Last}}</span></article>{{end}}</div>
+</section>{{end}}

@@ -1,0 +1,55 @@
+package main
+
+import (
+	"net/http/httptest"
+	"strings"
+	"testing"
+)
+
+func TestGenerator(t *testing.T) {
+	for _, ancestry := range ancestries {
+		names, ok := generate(ancestry, 6)
+		if !ok || len(names) != 6 {
+			t.Fatalf("invalid batch for %s", ancestry)
+		}
+		seen := map[Name]bool{}
+		for _, n := range names {
+			if n.First == "" || n.Last == "" || seen[n] {
+				t.Fatalf("empty or duplicate name: %+v", n)
+			}
+			seen[n] = true
+		}
+	}
+	if _, ok := generate("Murloc", 6); ok {
+		t.Fatal("accepted unknown ancestry")
+	}
+}
+
+func TestPages(t *testing.T) {
+	for _, tc := range []struct {
+		path    string
+		partial bool
+		status  int
+	}{
+		{"/", false, 200}, {"/?ancestry=Orc", true, 200}, {"/?ancestry=Night+elf", false, 200}, {"/?ancestry=unknown", true, 400}, {"/missing", false, 404}, {"/static/htmx.min.js", false, 200},
+	} {
+		r := httptest.NewRequest("GET", tc.path, nil)
+		if tc.partial {
+			r.Header.Set("HX-Request", "true")
+		}
+		w := httptest.NewRecorder()
+		handler().ServeHTTP(w, r)
+		if w.Code != tc.status {
+			t.Fatalf("%s: got %d", tc.path, w.Code)
+		}
+		if tc.status == 200 && !strings.HasPrefix(tc.path, "/static/") {
+			body := w.Body.String()
+			if strings.Contains(body, "<!doctype html>") == tc.partial {
+				t.Fatal("wrong page/fragment response")
+			}
+			if strings.Count(body, `class="name-card"`) != 6 {
+				t.Fatal("expected six cards")
+			}
+		}
+	}
+}
