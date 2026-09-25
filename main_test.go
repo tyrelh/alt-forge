@@ -27,11 +27,14 @@ func TestGenerator(t *testing.T) {
 
 func TestPages(t *testing.T) {
 	for _, tc := range []struct {
-		path    string
-		partial bool
-		status  int
+		path     string
+		partial  bool
+		status   int
+		selected string
 	}{
-		{"/", false, 200}, {"/?ancestry=Orc", true, 200}, {"/?ancestry=Night+elf", false, 200}, {"/?ancestry=unknown", true, 400}, {"/missing", false, 404}, {"/static/htmx.min.js", false, 200},
+		{"/", false, 200, ""}, {"/?ancestry=Orc", true, 200, ""}, {"/?ancestry=Night+elf", false, 200, ""},
+		{"/?ancestry=Undead", false, 200, "Undead"}, {"/?ancestry=Undead", true, 200, "Undead"},
+		{"/?ancestry=unknown", true, 400, ""}, {"/missing", false, 404, ""}, {"/static/htmx.min.js", false, 200, ""},
 	} {
 		r := httptest.NewRequest("GET", tc.path, nil)
 		if tc.partial {
@@ -49,6 +52,14 @@ func TestPages(t *testing.T) {
 			}
 			if strings.Count(body, `class="name-card"`) != 6 {
 				t.Fatal("expected six cards")
+			}
+			if tc.selected != "" {
+				if !strings.Contains(body, `<span>`+tc.selected+` · 6 names</span>`) {
+					t.Fatalf("%s: wrong selected ancestry in results", tc.path)
+				}
+				if !tc.partial && !strings.Contains(body, `<option selected>`+tc.selected+`</option>`) {
+					t.Fatalf("%s: selected ancestry missing from form", tc.path)
+				}
 			}
 		}
 	}
