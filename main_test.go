@@ -25,6 +25,33 @@ func TestGenerator(t *testing.T) {
 	}
 }
 
+func TestUndeadNamePool(t *testing.T) {
+	pool, ok := pools["Undead"]
+	if !ok {
+		t.Fatal("missing Undead name pool")
+	}
+	for _, part := range []struct {
+		name   string
+		values []string
+		min    int
+	}{
+		{"first names", pool.first, 16},
+		{"surname prefixes", pool.prefix, 10},
+		{"surname suffixes", pool.suffix, 10},
+	} {
+		if len(part.values) < part.min {
+			t.Errorf("Undead %s: got %d entries, want at least %d", part.name, len(part.values), part.min)
+		}
+		seen := make(map[string]bool)
+		for _, value := range part.values {
+			if value == "" || seen[value] {
+				t.Errorf("Undead %s: empty or duplicate entry %q", part.name, value)
+			}
+			seen[value] = true
+		}
+	}
+}
+
 func TestPages(t *testing.T) {
 	for _, tc := range []struct {
 		path     string

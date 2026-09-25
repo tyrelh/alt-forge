@@ -13,7 +13,7 @@ var pools = map[string]namePool{
 	"Dwarf":     {[]string{"Borin", "Helga", "Dagna", "Thorin", "Brenna", "Kelda", "Durin", "Orik"}, []string{"Bronze", "Iron", "Deep", "Ember", "Stone", "Ale"}, []string{"beard", "hammer", "anvil", "forge", "delver", "mantle"}},
 	"Tauren":    {[]string{"Hamu", "Tala", "Maku", "Nara", "Orun", "Aponi", "Kova", "Tahu"}, []string{"Dawn", "Cloud", "River", "Earth", "Wind", "Sun"}, []string{"hoof", "mane", "walker", "horn", "runner", "seeker"}},
 	"Blood elf": {[]string{"Aethas", "Lyriel", "Vaelis", "Selara", "Theron", "Faelyn", "Aeris", "Belara"}, []string{"Sun", "Dawn", "Flame", "Gold", "Bright", "Ember"}, []string{"strider", "song", "weaver", "gaze", "heart", "wing"}},
-	"Undead":    {[]string{"Mordren", "Vesra", "Ravik", "Sylith", "Keldran", "Morwen", "Thessik", "Velric"}, []string{"Grave", "Dusk", "Bone", "Ash", "Blight", "Raven"}, []string{"whisper", "veil", "mourn", "shroud", "binder", "shade"}},
+	"Undead":    {[]string{"Mordren", "Vesra", "Ravik", "Sylith", "Keldran", "Morwen", "Thessik", "Velric", "Nerath", "Velys", "Drevana", "Malrik", "Ossira", "Tarneth", "Zorven", "Eryth", "Varena", "Korveth", "Nythra", "Reldan"}, []string{"Grave", "Dusk", "Bone", "Ash", "Blight", "Raven", "Crypt", "Hollow", "Wraith", "Gloom", "Cinder", "Tomb"}, []string{"whisper", "veil", "mourn", "shroud", "binder", "shade", "walker", "wrought", "hallow", "reaver", "keeper", "weaver"}},
 }
 
 func generate(ancestry string, count int) ([]Name, bool) {
