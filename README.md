@@ -20,7 +20,7 @@ go test ./...
 
 ## How it works
 
-Go's standard library serves embedded HTML templates and assets. The form uses HTMX to replace the result section with a server-rendered fragment. It also works as an ordinary GET form without JavaScript. Seven ancestry styles each produce six distinct first-and-last-name combinations. These are invented fantasy names, not a guarantee of in-game naming rules or availability.
+Go's standard library serves embedded HTML templates and assets. The form uses HTMX to replace the result section with a server-rendered fragment. It also works as an ordinary GET form without JavaScript. Eight ancestry styles each produce six distinct first-and-last-name combinations. These are invented fantasy names, not a guarantee of in-game naming rules or availability.
 
 `names.go` holds the name pools and generator; `main.go` handles HTTP; `templates/page.html` contains the full page and results fragment; `static/style.css` styles the page. HTMX 2.0.11 is vendored in `static/htmx.min.js` with its license in `static/HTMX-LICENSE.txt`, from https://github.com/bigskysoftware/htmx. Documentation: https://htmx.org/docs/.
 

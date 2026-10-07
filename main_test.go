@@ -61,6 +61,7 @@ func TestPages(t *testing.T) {
 	}{
 		{"/", false, 200, ""}, {"/?ancestry=Orc", true, 200, ""}, {"/?ancestry=Night+elf", false, 200, ""},
 		{"/?ancestry=Undead", false, 200, "Undead"}, {"/?ancestry=Undead", true, 200, "Undead"},
+		{"/?ancestry=Goblin", false, 200, "Goblin"}, {"/?ancestry=Goblin", true, 200, "Goblin"},
 		{"/?ancestry=unknown", true, 400, ""}, {"/missing", false, 404, ""}, {"/static/htmx.min.js", false, 200, ""},
 	} {
 		r := httptest.NewRequest("GET", tc.path, nil)
