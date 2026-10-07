@@ -5,7 +5,7 @@ import "math/rand/v2"
 type Name struct{ First, Last string }
 type namePool struct{ first, prefix, suffix []string }
 
-var ancestries = []string{"Human", "Orc", "Night elf", "Dwarf", "Tauren", "Blood elf"}
+var ancestries = []string{"Human", "Orc", "Night elf", "Dwarf", "Tauren", "Blood elf", "Undead", "Goblin"}
 var pools = map[string]namePool{
 	"Human":     {[]string{"Alden", "Mira", "Rowan", "Elara", "Cedric", "Tessa", "Brenna", "Galen"}, []string{"Ash", "Bright", "West", "Raven", "Fair", "Storm"}, []string{"ford", "wood", "vale", "brook", "field", "well"}},
 	"Orc":       {[]string{"Gorak", "Draka", "Thurg", "Rokka", "Mogra", "Karg", "Urza", "Durok"}, []string{"Iron", "Skull", "Blood", "Stone", "Wolf", "Thunder"}, []string{"fist", "breaker", "fang", "scar", "axe", "howl"}},
@@ -13,6 +13,8 @@ var pools = map[string]namePool{
 	"Dwarf":     {[]string{"Borin", "Helga", "Dagna", "Thorin", "Brenna", "Kelda", "Durin", "Orik"}, []string{"Bronze", "Iron", "Deep", "Ember", "Stone", "Ale"}, []string{"beard", "hammer", "anvil", "forge", "delver", "mantle"}},
 	"Tauren":    {[]string{"Hamu", "Tala", "Maku", "Nara", "Orun", "Aponi", "Kova", "Tahu"}, []string{"Dawn", "Cloud", "River", "Earth", "Wind", "Sun"}, []string{"hoof", "mane", "walker", "horn", "runner", "seeker"}},
 	"Blood elf": {[]string{"Aethas", "Lyriel", "Vaelis", "Selara", "Theron", "Faelyn", "Aeris", "Belara"}, []string{"Sun", "Dawn", "Flame", "Gold", "Bright", "Ember"}, []string{"strider", "song", "weaver", "gaze", "heart", "wing"}},
+	"Goblin":    {[]string{"Gazlo", "Rizzle", "Noggin", "Snazz", "Fizzik", "Grizza", "Krixel", "Zapna", "Boggle", "Vexi"}, []string{"Cog", "Gear", "Spark", "Gold", "Fuse", "Scrap", "Bolt", "Coin"}, []string{"wrench", "sprocket", "fizz", "grabber", "tinker", "pocket", "bang", "spinner"}},
+	"Undead":    {[]string{"Mordren", "Vesra", "Ravik", "Sylith", "Keldran", "Morwen", "Thessik", "Velric", "Nerath", "Velys", "Drevana", "Malrik", "Ossira", "Tarneth", "Zorven", "Eryth", "Varena", "Korveth", "Nythra", "Reldan"}, []string{"Grave", "Dusk", "Bone", "Ash", "Blight", "Raven", "Crypt", "Hollow", "Wraith", "Gloom", "Cinder", "Tomb"}, []string{"whisper", "veil", "mourn", "shroud", "binder", "shade", "walker", "wrought", "hallow", "reaver", "keeper", "weaver"}},
 }
 
 func generate(ancestry string, count int) ([]Name, bool) {
